@@ -21,7 +21,9 @@ library paths to specific files to load itself.
 Using `auto_load` you can add the following to your application:
 
 ```elixir
-Envy.auto_load
+unless Mix.env == "prod" do
+  Envy.auto_load
+end
 ```
 
 This will look for `.env` and the mix env specific file. For example if your
