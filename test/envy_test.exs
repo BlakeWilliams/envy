@@ -16,6 +16,10 @@ defmodule EnvyTest do
     cleanup_env(["FOO"])
   end
 
+  test "parse can ignore lines containing only comments" do
+    assert Envy.parse(~s(# comment))
+  end
+
   test "parse handle escaped quotes" do
     Envy.parse(~S(foo="\"awesome\""))
 

@@ -52,6 +52,7 @@ defmodule Envy do
     content
     |> String.split("\n")
     |> Enum.reject(&blank_entry?/1)
+    |> Enum.reject(&comment_entry?/1)
     |> Enum.map(&parse_line/1)
   end
 
@@ -87,5 +88,9 @@ defmodule Envy do
 
   defp blank_entry?(string) do
     string == ""
+  end
+
+  defp comment_entry?(string) do
+    String.match?(string, ~r(^\s*#))
   end
 end
