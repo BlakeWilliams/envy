@@ -9,7 +9,7 @@ Add envy to your dependencies in `mix.exs`.
 
 ```elixir
 def deps do
-  [{:envy, "~> 0.0.1"}]
+  [{:envy, "~> 0.0.2"}]
 end
 ```
 
