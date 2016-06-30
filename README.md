@@ -53,3 +53,10 @@ If you need to use `#` in your values you can use double quotes.
 ```
 tag="#bar" #comments
 ```
+
+## Using Envy in config
+
+If you need environment variables set by envy in `config/` files you can load
+your env files with `Envy.auto_load` or `Envy.load` then call
+`Envy.reload_config` to re-evaluate the config files with the correct
+environment variables set.

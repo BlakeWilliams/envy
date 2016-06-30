@@ -42,6 +42,17 @@ defmodule Envy do
   end
 
   @doc """
+  Reloads `config/config.exs`. This function can be used to reload configuration
+  that relies on environment variables set by Envy.
+
+  This workaround is necessary since config files don't have
+  access to dependencies.
+  """
+  def reload_config do
+    Mix.Config.read!("config/config.exs") |> Mix.Config.persist
+  end
+
+  @doc """
   Parses env formatted file.
   """
   def parse(content) do
