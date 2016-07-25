@@ -18,11 +18,18 @@ end
 To load env files you have two options, you can use the autoloader or give the
 library paths to specific files to load itself.
 
-Using `auto_load` you can add the following to your application:
+Using `auto_load` you can add the following to your application in `lib/my_application.ex`:
 
 ```elixir
-unless Mix.env == "prod" do
-  Envy.auto_load
+defmodule MyApplication do
+  use Application
+
+  def start(_type, _args) do
+    unless Mix.env == :prod do
+      Envy.auto_load
+    end
+    # Existing code
+  end
 end
 ```
 
