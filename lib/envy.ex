@@ -1,4 +1,13 @@
 defmodule Envy do
+  def start do
+    :application.ensure_all_started(:envy)
+  end
+
+  def start(_, _) do
+    auto_load
+    {:ok, spawn(fn -> nil end)}
+  end
+
   @moduledoc """
   Provides explicit and auto loading of env files.
 

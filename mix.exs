@@ -12,7 +12,7 @@ defmodule Envy.Mixfile do
   end
 
   def application do
-    [applications: [:logger]]
+    [mod: {Envy, []}, applications: [:logger]]
   end
 
   defp deps do
