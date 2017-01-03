@@ -28,6 +28,14 @@ defmodule EnvyTest do
     cleanup_env(["FOO"])
   end
 
+  test "parse can handle values with an equals in them" do
+    Envy.parse(~S(foo="asdf=1=2"))
+
+    assert System.get_env("FOO") == "asdf=1=2"
+
+    cleanup_env(["FOO"])
+  end
+
   test "it can parse .env in the current directory" do
     run_in_dir("test-env", fn ->
       File.write(".env", "elixir=awesome", [:write])
