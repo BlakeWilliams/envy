@@ -3,7 +3,7 @@ defmodule Envy.Mixfile do
 
   def project do
     [app: :envy,
-     version: "1.0.0",
+     version: "1.1.0",
      elixir: "~> 1.1",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
