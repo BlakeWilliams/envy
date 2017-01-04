@@ -1,4 +1,6 @@
 defmodule Envy do
+  @key_value_delimeter "="
+
   @moduledoc """
   Provides explicit and auto loading of env files.
 
@@ -70,7 +72,7 @@ defmodule Envy do
   defp parse_line(line) do
     [key, value] = line
       |> String.strip
-      |> String.split("=")
+      |> String.split(@key_value_delimeter, parts: 2)
 
     [key, parse_value(value)]
   end
