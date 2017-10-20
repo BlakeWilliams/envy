@@ -71,7 +71,7 @@ defmodule Envy do
 
   defp parse_line(line) do
     [key, value] = line
-      |> String.strip
+      |> String.trim
       |> String.split(@key_value_delimeter, parts: 2)
 
     [key, parse_value(value)]
