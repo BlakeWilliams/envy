@@ -1,6 +1,8 @@
 defmodule Envy do
   @key_value_delimeter "="
 
+  @override_existing? Application.get_env(:envy, :override_existing, true)
+
   @moduledoc """
   Provides explicit and auto loading of env files.
 
@@ -27,7 +29,7 @@ defmodule Envy do
   """
   def auto_load do
     Application.ensure_started(:mix)
-    current_env = Mix.env |> to_string |> String.downcase
+    current_env = Mix.env() |> to_string |> String.downcase()
 
     [".env", ".env.#{current_env}"] |> load
   end
@@ -51,7 +53,7 @@ defmodule Envy do
   access to dependencies.
   """
   def reload_config do
-    Mix.Config.read!("config/config.exs") |> Mix.Config.persist
+    Mix.Config.read!("config/config.exs") |> Mix.Config.persist()
   end
 
   @doc """
@@ -70,8 +72,9 @@ defmodule Envy do
   end
 
   defp parse_line(line) do
-    [key, value] = line
-      |> String.strip
+    [key, value] =
+      line
+      |> String.strip()
       |> String.split(@key_value_delimeter, parts: 2)
 
     [key, parse_value(value)]
@@ -81,7 +84,7 @@ defmodule Envy do
     if String.starts_with?(value, "\"") do
       unquote_string(value)
     else
-      value |> String.split("#", parts: 2) |> List.first
+      value |> String.split("#", parts: 2) |> List.first()
     end
   end
 
@@ -89,13 +92,15 @@ defmodule Envy do
     value
     |> String.split(~r{(?<!\\)"}, parts: 3)
     |> Enum.drop(1)
-    |> List.first
+    |> List.first()
     |> String.replace(~r{\\"}, ~S("))
   end
 
   defp load_env(pairs) when is_list(pairs) do
-    Enum.each(pairs, fn([key, value]) ->
-      System.put_env(String.upcase(key), value)
+    Enum.each(pairs, fn [key, value] ->
+      if System.get_env(key) == nil || @override_existing? do
+        System.put_env(String.upcase(key), value)
+      end
     end)
   end
 
