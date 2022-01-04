@@ -6,6 +6,16 @@ defmodule EnvyTest do
 
     assert System.get_env("FOO") == "bar"
     assert System.get_env("BAR") == "foo"
+    cleanup_env(["FOO", "BAR"])
+  end
+
+  test "existing environment variables are preserved and take priority over dotenv config" do
+    System.put_env("BAZ", "already exists")
+    Envy.parse("foo=foo\nbar=bar\nbaz=baz")
+    assert System.get_env("FOO") == "foo"
+    assert System.get_env("BAR") == "bar"
+    assert System.get_env("BAZ") == "already exists"
+    cleanup_env(["FOO", "BAR", "BAZ"])
   end
 
   test "parse can handle quotes with comments" do
