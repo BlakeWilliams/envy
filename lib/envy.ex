@@ -29,7 +29,7 @@ defmodule Envy do
     Application.ensure_started(:mix)
     current_env = Mix.env |> to_string |> String.downcase
 
-    [".env", ".env.#{current_env}"] |> load
+    [".env.#{current_env}", ".env"] |> load
   end
 
   @doc """
@@ -95,7 +95,10 @@ defmodule Envy do
 
   defp load_env(pairs) when is_list(pairs) do
     Enum.each(pairs, fn([key, value]) ->
-      System.put_env(String.upcase(key), value)
+      key = String.upcase(key)
+      if System.get_env(key) == nil do
+        System.put_env(key, value)
+      end
     end)
   end
 
