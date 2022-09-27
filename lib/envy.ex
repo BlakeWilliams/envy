@@ -51,7 +51,9 @@ defmodule Envy do
   access to dependencies.
   """
   def reload_config do
-    Mix.Config.read!("config/config.exs") |> Mix.Config.persist
+    Mix.Project.config()[:config_path]
+    |> Mix.Config.read!()
+    |> Mix.Config.persist
   end
 
   @doc """
